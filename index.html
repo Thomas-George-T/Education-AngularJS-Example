@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>	
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
+</head>
+
+<body ng-app="myApp" ng-controller="myCtrl">
+
+<div class="container">
+<br>
+	<!--Searching-->
+						<label class="col-form-label">Search </label>	
+					
+						<input type="Text" ng-model="Search" class="form-control" placeholder="Search across the table">
+<br>				
+	<!--Dynamic filtering-->
+	
+	<label class="col-form-label">Dynamic Filtering </label>
+	
+	<select ng-model="selectedCategory" ng-options="x for x in jsonFileData">
+	</select>
+<br>
+
+	<table class="table table-bordered table-striped">
+		
+		 	<tr>
+		 		<th>Sr. No</th>
+		 		<th ng-click="sortFun('block')">Block</th>
+		 		<th ng-click="sortFun('cluster')">Cluster</th>
+		 		<th ng-click="sortFun('schoolid')">School ID</th>
+		 		<th ng-click="sortFun('schoolname')">School Name</th>
+		 		<th ng-click="sortFun('category')">Category</th>
+		 		<th ng-click="sortFun('gender')">Gender</th>
+		 		<th ng-click="sortFun('medium_of_inst')">Medium of instruction</th>
+		 		<th ng-click="sortFun('address')">Address</th>
+		 		<th ng-click="sortFun('area')">Area</th>
+		 		<th ng-click="sortFun('pincode')">Pincode</th>
+		 		<th ng-click="sortFun('landmark')">Landmark</th>
+		 		<th ng-click="sortFun('busroutes')">Bus Routes</th>
+		 	</tr>
+	
+			<tr ng-repeat="x in jsonFileData | orderBy : Title | filter :  Search">
+				<td>{{$index+1}}</td>
+				<td>{{x.block}}</td>
+				<td>{{x.cluster}}</td>
+				<td>{{x.schoolid}}</td>
+				<td>{{x.schoolname}}</td>
+				<td>{{x.category}}</td>
+				<td>{{x.gender}}</td>
+				<td>{{x.medium_of_inst}}</td>
+				<td>{{x.address}}</td>
+				<td>{{x.area}}</td>
+				<td>{{x.pincode}}</td>
+				<td>{{x.landmark}}</td>
+				<td>{{x.busroutes}}</td>   
+			</tr>
+	</table>
+
+
+
+
+
+<script>
+	var app = angular.module('myApp', []);
+	app.controller('myCtrl', function($scope, $http) {
+
+	//json
+    $http.get("https://raw.githubusercontent.com/tgt555/AngularJS-w3schools/master/education.json").then(function(response) {
+      $scope.jsonFileData = response.data;
+  });
+
+   //sorting
+   $scope.sortFun = function(x){
+    		$scope.Title=x;
+    } 
+
+});	
+
+//Search over the limited fields
+
+	var filteredData = $Search('filter')(data, function(data) {
+  	if ($scope.Search) {
+    return data.schoolname.toString().indexOf($scope.filter) > -1 
+    	|| data.address.toString().indexOf($scope.filter) > -1 
+    	|| data.area.toString().indexOf($scope.filter) > -1 
+    	|| data.pincode.toString().indexOf($scope.filter) > -1 
+    	|| data.landmark.toString().indexOf($scope.filter) > -1;
+  	} else {
+    return true;
+  	}
+	});
+	
+</script>
+
+</div>
+
+</body>
+</html>
