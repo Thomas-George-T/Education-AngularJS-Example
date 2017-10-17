@@ -70,7 +70,7 @@
 	app.controller('myCtrl', function($scope, $http) {
 
 	//json
-    $http.get("https://raw.githubusercontent.com/tgt555/AngularJS-w3schools/master/education.json").then(function(response) {
+    $http.get("https://raw.githubusercontent.com/tgt555/Education/master/education.json").then(function(response) {
       $scope.jsonFileData = response.data;
   });
 
