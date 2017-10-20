@@ -1,6 +1,6 @@
 # Education
 
-- Using Angular functions on an Education Data Set
+- AngularJS functions example on an Education Data Set
 - https://htmlpreview.github.io/?https://github.com/tgt555/Education/blob/master/index.html
 
 ## Features
